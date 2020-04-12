@@ -59,37 +59,8 @@ struct game {
     void turnDown() {
         xspeed = 0;
         yspeed = 1;
-        length++;
     }
-    void tailRenderer(SDL_Renderer* renderer) {
-        if (length != tailX.size()) {
-            tailX.push_back(X0);
-            tailY.push_back(Y0);
-        }
-        // Đẩy block cuối lên đầu;
-        for (int i = 1; i < length; i++) {
-            tailX[i - 1] = tailX[i];
-            tailY[i - 1] = tailY[i];
-        }
-        if (length >= 1) {
-            tailX[tailX.size() - 1] = X0;
-            tailY[tailY.size() - 1] = Y0;
-        }
-        // Render
-        for (int i = 0; i < length; i++) {
-            SDL_Rect tail;
-            tail.x = tailX[i];
-            tail.y = tailY[i];
-            tail.w = scale;
-            tail.h = scale;
-            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-            SDL_RenderFillRect(renderer, &tail);
-        }
-    }
-};
-struct food {
-    int x, y;
-
+    
 };
 int main(int argc, char* argv[])
 {
@@ -107,8 +78,7 @@ int main(int argc, char* argv[])
         r.move();
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_RenderClear(renderer); 
-        r.headRenderer(renderer); 
-        r.tailRenderer(renderer); 
+        r.headRenderer(renderer);  
         SDL_RenderPresent(renderer);
         SDL_Delay(40);
         if (SDL_PollEvent(&e) == 0) continue;
